@@ -2,7 +2,7 @@
  * Build configuration variables.
  */
 PROJECT_URL = 'https://github.com/bacularis'
-EXTERNAL_URL = "https://bacularis.app/download/bacularis-external-${params.BACULARIS_VERSION}.tar.gz"
+EXTERNAL_URL = "https://bacularis.app/downloads/bacularis-external-${params.BACULARIS_VERSION}.tar.gz"
 REGISTRY_URL = 'http://10.0.0.1:5000'
 NAME = 'bacularis'
 PACKAGES = ['standalone', 'web', 'api-dir', 'api-sd', 'api-fd']
