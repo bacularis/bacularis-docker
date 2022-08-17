@@ -10,6 +10,10 @@ The project consists of two web applications: the web interface and Bacula progr
 
 Bacularis is a friendly fork of Baculum. It has been founded by Baculum's creator to simplify Baculum features that they could be used not only by users with strong Bacula skills but also by beginners or intermediate users.
 
+## Docker images
+
+All built images are available on Docker Hub: https://hub.docker.com/u/bacularis
+
 ## Documentation
 
 Bacularis documentation is available here: https://bacularis.app/doc/
