@@ -1,0 +1,57 @@
+FROM alpine:%%ALPINE_VERSION%%
+
+LABEL maintainer="Marcin Haba <marcin.haba@bacula.pl>"
+
+ENV BACULARIS_VERSION=%%BACULARIS_VERSION%%
+ENV PACKAGE_NAME=%%PACKAGE_NAME%%
+ENV PHP_VERSION=81
+ENV WEB_USER=nginx
+
+RUN if [ "${PACKAGE_NAME}" = 'standalone' ] || [ "${PACKAGE_NAME}" = 'api-dir' ]; then \
+		apk add postgresql14; \
+		mkdir -m 0777 /run/postgresql; \
+		chown postgres:postgres /run/postgresql; \
+	fi && \
+	mkdir -m 0770 /run/bacula && \
+	apk add nginx && \
+	apk add bacula bacula-pgsql bacula-client && \
+	chown root:bacula /etc/bacula /etc/bacula/bacula-fd.conf /var/lib/bacula/archive && \
+	chmod 775 /etc/bacula /var/lib/bacula/archive && \
+	chown bacula:bacula /run/bacula && \
+	addgroup ${WEB_USER} bacula && \
+	apk add bash sudo && \
+	apk add php${PHP_VERSION}-bcmath php${PHP_VERSION}-curl php${PHP_VERSION}-dom php${PHP_VERSION}-json php${PHP_VERSION}-ldap php${PHP_VERSION}-pdo php${PHP_VERSION}-pgsql php${PHP_VERSION}-pdo_pgsql php${PHP_VERSION}-intl php${PHP_VERSION}-ctype php${PHP_VERSION}-session php${PHP_VERSION}-fpm && \
+	sed -i "/listen = / s!127.0.0.1:9000!/var/run/php-fpm.sock!; /user = / s!nobody!${WEB_USER}!; /group = / s!nobody!${WEB_USER}!; s!;listen.group!listen.group!" /etc/php81/php-fpm.d/www.conf
+
+EXPOSE 9101/tcp 9102/tcp 9103/tcp 9097/tcp
+
+COPY "docker/systems/alpine/sudoers.d/bacularis-${PACKAGE_NAME}" /etc/sudoers.d/
+
+COPY "docker/systems/alpine/entrypoint/docker-entrypoint.inc"  /
+
+COPY "docker/systems/alpine/entrypoint/docker-entrypoint-${PACKAGE_NAME}.sh" /docker-entrypoint.sh
+
+COPY bacularis /var/www/bacularis
+
+COPY "docker/systems/alpine/config/API/api-${PACKAGE_NAME}.conf" /var/www/bacularis/protected/vendor/bacularis/bacularis-api/API/Config/api.conf
+
+COPY --chown=${WEB_USER}:${WEB_USER} common/config/API/* /var/www/bacularis/protected/vendor/bacularis/bacularis-api/API/Config/
+
+COPY --chown=${WEB_USER}:${WEB_USER} common/config/Web/* /var/www/bacularis/protected/vendor/bacularis/bacularis-web/Web/Config/
+
+RUN if [ "${PACKAGE_NAME}" = 'web' ]; then \
+		rm /var/www/bacularis/protected/vendor/bacularis/bacularis-api/API/Config/*.conf; \
+		rm /var/www/bacularis/protected/vendor/bacularis/bacularis-web/Web/Config/*.conf; \
+		ln -sf vendor/bacularis/bacularis-web/Web/Config/application.xml /var/www/bacularis/protected/; \
+	fi && \
+	if [ "${PACKAGE_NAME}" = 'api-dir' ] || [ "${PACKAGE_NAME}" = 'api-sd' ] || [ "${PACKAGE_NAME}" = 'api-fd' ]; then \
+		rm /var/www/bacularis/protected/vendor/bacularis/bacularis-web/Web/Config/*.conf; \
+		ln -sf vendor/bacularis/bacularis-api/API/Config/application.xml /var/www/bacularis/protected/; \
+	fi && \
+	/var/www/bacularis/protected/tools/install.sh -w nginx -c /etc/nginx/http.d -u ${WEB_USER} -d /var/www/bacularis/htdocs -p /var/run/php-fpm.sock
+
+VOLUME ["/var/lib/postgresql/data", "/etc/bacula", "/var/lib/bacula" "/var/www/bacularis/protected/vendor/bacularis/bacularis-api/API/Config", "/var/www/bacularis/protected/vendor/bacularis/bacularis-api/API/Logs", "/var/www/bacularis/protected/vendor/bacularis/bacularis-web/Web/Config", "/var/www/bacularis/protected/vendor/bacularis/bacularis-web/Web/Logs"]
+
+ENTRYPOINT [ "/docker-entrypoint.sh" ]
+
+CMD ["nginx", "-g", "daemon off;"]
