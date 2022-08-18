@@ -39,14 +39,16 @@ COPY --chown=${WEB_USER}:${WEB_USER} common/config/API/* /var/www/bacularis/prot
 
 COPY --chown=${WEB_USER}:${WEB_USER} common/config/Web/* /var/www/bacularis/protected/vendor/bacularis/bacularis-web/Web/Config/
 
+COPY bacularis/protected/vendor/bacularis/bacularis-common/project/protected/application.xml /var/www/bacularis/protected/
+
 RUN if [ "${PACKAGE_NAME}" = 'web' ]; then \
 		rm /var/www/bacularis/protected/vendor/bacularis/bacularis-api/API/Config/*.conf; \
 		rm /var/www/bacularis/protected/vendor/bacularis/bacularis-web/Web/Config/*.conf; \
-		ln -sf vendor/bacularis/bacularis-web/Web/Config/application.xml /var/www/bacularis/protected/; \
+		sed -i '/service id="oauth"/d; /service id="api"/d; /service id="panel"/d; s!BasePath="Bacularis.Common.Pages"!BasePath="Bacularis.Web.Pages"!; s!DefaultPage="CommonPage"!DefaultPage="Dashboard"!;' /var/www/bacularis/protected/application.xml; \
 	fi && \
 	if [ "${PACKAGE_NAME}" = 'api-dir' ] || [ "${PACKAGE_NAME}" = 'api-sd' ] || [ "${PACKAGE_NAME}" = 'api-fd' ]; then \
 		rm /var/www/bacularis/protected/vendor/bacularis/bacularis-web/Web/Config/*.conf; \
-		ln -sf vendor/bacularis/bacularis-api/API/Config/application.xml /var/www/bacularis/protected/; \
+		sed -i 's!BasePath="Bacularis.Common.Pages"!BasePath="Bacularis.API.Pages.Panel"!; s!DefaultPage="CommonPage"!DefaultPage="APIHome"!; /service id="web"/d;' /var/www/bacularis/protected/application.xml; \
 	fi && \
 	/var/www/bacularis/protected/tools/install.sh -w nginx -c /etc/nginx/http.d -u ${WEB_USER} -d /var/www/bacularis/htdocs -p /var/run/php-fpm.sock
 
