@@ -6,7 +6,8 @@ BACULA_USER='bacula'
 
 function initdb()
 {
-    su ${POSTGRESQL_USER} -c "mkdir -m 0700 ${PGDATA}"
+    chown ${POSTGRESQL_USER} ${PGDATA}
+    chmod 700 ${PGDATA}
     su ${POSTGRESQL_USER} -c 'initdb'
 }
 
