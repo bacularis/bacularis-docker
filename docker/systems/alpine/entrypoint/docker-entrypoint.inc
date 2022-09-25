@@ -74,5 +74,5 @@ function start_php_fpm()
 
 function stop_php_fpm()
 {
-    kill `pidof php-fpm`
+    kill `pidof php-fpm81`
 }
