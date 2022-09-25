@@ -28,6 +28,9 @@ RUN apt update && \
 		apt -y install bacula-fd; \
 		sed -i '/FDAddress = 127.0.0.1/d' /etc/bacula/bacula-fd.conf; \
 	fi && \
+	if [ "${PACKAGE_NAME}" = 'standalone' ] || [ "${PACKAGE_NAME}" = 'web' ]; then \
+		apt -y install expect gnupg openssh-client; \
+	fi && \
 	chown root:bacula /etc/bacula && \
 	chmod 775 /etc/bacula && \
 	chmod 660 /etc/bacula/*.conf || true && \
