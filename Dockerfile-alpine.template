@@ -24,7 +24,11 @@ RUN if [ "${PACKAGE_NAME}" = 'standalone' ] || [ "${PACKAGE_NAME}" = 'api-dir' ]
 	addgroup ${WEB_USER} bacula && \
 	apk add bash sudo && \
 	apk add php${PHP_VERSION}-bcmath php${PHP_VERSION}-curl php${PHP_VERSION}-dom php${PHP_VERSION}-json php${PHP_VERSION}-ldap php${PHP_VERSION}-pdo php${PHP_VERSION}-pgsql php${PHP_VERSION}-pdo_pgsql php${PHP_VERSION}-intl php${PHP_VERSION}-ctype php${PHP_VERSION}-session php${PHP_VERSION}-fpm php${PHP_VERSION}-openssl && \
-	sed -i "/listen = / s!127.0.0.1:9000!/var/run/php-fpm.sock!; /user = / s!nobody!${WEB_USER}!; /group = / s!nobody!${WEB_USER}!; s!;listen.group!listen.group!" /etc/php81/php-fpm.d/www.conf
+	sed -i "/listen = / s!127.0.0.1:9000!/var/run/php-fpm.sock!; /user = / s!nobody!${WEB_USER}!; /group = / s!nobody!${WEB_USER}!; s!;listen.group!listen.group!" /etc/php81/php-fpm.d/www.conf && \
+	if [ "${PACKAGE_NAME}" = 'standalone' ] || [ "${PACKAGE_NAME}" = 'api-dir' ]; then \
+		# Fix job to backup catalog database
+		sed -i 's!make_catalog_backup MyCatalog!make_catalog_backup bacula!' /etc/bacula/bacula-dir.conf; \
+	fi
 
 EXPOSE 9101/tcp 9102/tcp 9103/tcp 9097/tcp
 
