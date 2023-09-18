@@ -8,7 +8,7 @@ NAME = 'bacularis'
 PACKAGES = ['standalone', 'web', 'api-dir', 'api-sd', 'api-fd']
 ALPINE_VERSION='3.18.3'
 DEBIAN_VERSION='12.1-slim'
-DEBIAN_CODENAME='bullseye'
+DEBIAN_CODENAME='bookworm'
 
 def pullRepos() {
 	dir ("${NAME}-app") {
