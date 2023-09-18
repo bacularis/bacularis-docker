@@ -6,8 +6,8 @@ EXTERNAL_URL = "https://bacularis.app/downloads/bacularis-external-${params.BACU
 REGISTRY_URL = 'http://10.0.0.1:5000'
 NAME = 'bacularis'
 PACKAGES = ['standalone', 'web', 'api-dir', 'api-sd', 'api-fd']
-ALPINE_VERSION='3.16.2'
-DEBIAN_VERSION='11.4-slim'
+ALPINE_VERSION='3.18.3'
+DEBIAN_VERSION='12.1-slim'
 DEBIAN_CODENAME='bullseye'
 
 def pullRepos() {

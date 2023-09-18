@@ -4,7 +4,7 @@ LABEL maintainer="Marcin Haba <marcin.haba@bacula.pl>"
 
 ENV BACULARIS_VERSION=%%BACULARIS_VERSION%%
 ENV PACKAGE_NAME=%%PACKAGE_NAME%%
-ENV PHP_VERSION=7.4
+ENV PHP_VERSION=8.2
 ENV WEB_USER=www-data
 
 RUN apt update && \
@@ -12,7 +12,7 @@ RUN apt update && \
 	if [ "${PACKAGE_NAME}" = 'standalone' ] || [ "${PACKAGE_NAME}" = 'api-dir' ]; then \
 		apt -y install postgresql; \
 		/etc/init.d/postgresql start; \
-		sed -i 's!peer$!trust!g' /etc/postgresql/13/main/pg_hba.conf; \
+		sed -i 's!peer$!trust!g' /etc/postgresql/15/main/pg_hba.conf; \
 		mkdir /etc/dbconfig-common; \
 		echo "dbc_install=false\ndbc_dbtype=pgsql\ndbc_name=bacula\ndbc_address=localhost\ndbc_dbuser=bacula\ndbc_dbpassword=" > /etc/dbconfig-common/bacula-director-pgsql.conf; \
 		apt -y install dbconfig-no-thanks bacula-director bacula-director-pgsql bacula-console; \
