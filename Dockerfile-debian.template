@@ -36,7 +36,7 @@ RUN apt update && \
 	chmod 660 /etc/bacula/*.conf || true && \
 	apt -y install nginx && \
 	usermod -a -G bacula ${WEB_USER} && \
-	apt -y install sudo php-bcmath php-curl php-dom php-json php-ldap php-pgsql php-pgsql php-intl php-fpm && \
+	apt -y install sudo php-bcmath php-curl php-dom php-json php-ldap php-pgsql php-pgsql php-mysql php-intl php-fpm && \
 	apt -y -f install
 
 EXPOSE 9101/tcp 9102/tcp 9103/tcp 9097/tcp

@@ -23,7 +23,7 @@ RUN if [ "${PACKAGE_NAME}" = 'standalone' ] || [ "${PACKAGE_NAME}" = 'api-dir' ]
 	chown bacula:bacula /run/bacula && \
 	addgroup ${WEB_USER} bacula && \
 	apk add bash sudo && \
-	apk add php${PHP_VERSION}-bcmath php${PHP_VERSION}-curl php${PHP_VERSION}-dom php${PHP_VERSION}-json php${PHP_VERSION}-ldap php${PHP_VERSION}-pdo php${PHP_VERSION}-pgsql php${PHP_VERSION}-pdo_pgsql php${PHP_VERSION}-intl php${PHP_VERSION}-ctype php${PHP_VERSION}-session php${PHP_VERSION}-fpm php${PHP_VERSION}-openssl && \
+	apk add php${PHP_VERSION}-bcmath php${PHP_VERSION}-curl php${PHP_VERSION}-dom php${PHP_VERSION}-json php${PHP_VERSION}-ldap php${PHP_VERSION}-pdo php${PHP_VERSION}-pgsql php${PHP_VERSION}-pdo_pgsql php${PHP_VERSION}-mysqlnd php${PHP_VERSION}-pdo_mysql php${PHP_VERSION}-intl php${PHP_VERSION}-ctype php${PHP_VERSION}-session php${PHP_VERSION}-fpm php${PHP_VERSION}-openssl && \
 	sed -i "/listen = / s!127.0.0.1:9000!/var/run/php-fpm.sock!; /user = / s!nobody!${WEB_USER}!; /group = / s!nobody!${WEB_USER}!; s!;listen.group!listen.group!" /etc/php${PHP_VERSION}/php-fpm.d/www.conf && \
 	if [ "${PACKAGE_NAME}" = 'standalone' ] || [ "${PACKAGE_NAME}" = 'api-dir' ]; then \
 		# Fix job to backup catalog database
