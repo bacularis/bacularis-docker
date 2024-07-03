@@ -8,7 +8,7 @@ ENV PHP_VERSION=82
 ENV WEB_USER=nginx
 
 RUN if [ "${PACKAGE_NAME}" = 'standalone' ] || [ "${PACKAGE_NAME}" = 'api-dir' ]; then \
-		apk add postgresql15; \
+		apk add postgresql16; \
 		mkdir -m 0777 /run/postgresql; \
 		chown postgres:postgres /run/postgresql; \
 	fi && \
