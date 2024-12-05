@@ -57,7 +57,7 @@ RUN if [ "${PACKAGE_NAME}" = 'web' ]; then \
 	fi && \
 	/var/www/bacularis/protected/tools/install.sh -w nginx -c /etc/nginx/http.d -u ${WEB_USER} -d /var/www/bacularis/htdocs -p /var/run/php-fpm.sock
 
-VOLUME ["/var/lib/postgresql/data", "/etc/bacula", "/var/lib/bacula", "/var/www/bacularis/protected/vendor/bacularis/bacularis-api/API/Config", "/var/www/bacularis/protected/vendor/bacularis/bacularis-api/API/Logs", "/var/www/bacularis/protected/vendor/bacularis/bacularis-web/Web/Config", "/var/www/bacularis/protected/vendor/bacularis/bacularis-web/Web/Logs"]
+VOLUME ["/var/lib/postgresql/data", "/etc/bacula", "/var/lib/bacula", "/var/www/bacularis/protected/vendor/bacularis/bacularis-api/API/Config", "/var/www/bacularis/protected/vendor/bacularis/bacularis-api/API/Logs", "/var/www/bacularis/protected/vendor/bacularis/bacularis-web/Web/Config", "/var/www/bacularis/protected/vendor/bacularis/bacularis-web/Web/Logs", "/var/www/bacularis/protected/vendor/bacularis/bacularis-common/Common/Working"]
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
 
