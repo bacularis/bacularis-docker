@@ -60,10 +60,10 @@ function stop_bacula_fd()
 
 function start_php_fpm()
 {
-    /etc/init.d/php8.2-fpm start
+    /etc/init.d/php8.4-fpm start
 }
 
 function stop_php_fpm()
 {
-    /etc/init.d/php8.2-fpm stop
+    /etc/init.d/php8.4-fpm stop
 }

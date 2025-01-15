@@ -4,7 +4,7 @@ LABEL maintainer="Marcin Haba <marcin.haba@bacula.pl>"
 
 ENV BACULARIS_VERSION=%%BACULARIS_VERSION%%
 ENV PACKAGE_NAME=%%PACKAGE_NAME%%
-ENV PHP_VERSION=8.2
+ENV PHP_VERSION=8.4
 ENV WEB_USER=www-data
 
 RUN apt update && \
