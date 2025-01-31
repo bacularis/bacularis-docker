@@ -69,10 +69,10 @@ function stop_bacula_fd()
 
 function start_php_fpm()
 {
-    php-fpm82
+    php-fpm84
 }
 
 function stop_php_fpm()
 {
-    kill `pidof php-fpm82`
+    kill `pidof php-fpm84`
 }
