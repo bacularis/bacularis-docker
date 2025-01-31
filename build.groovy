@@ -6,7 +6,7 @@ EXTERNAL_URL = "https://bacularis.app/downloads/bacularis-external-${params.BACU
 REGISTRY_URL = 'http://10.0.0.1:5000'
 NAME = 'bacularis'
 PACKAGES = ['standalone', 'web', 'api-dir', 'api-sd', 'api-fd']
-ALPINE_VERSION='3.20'
+ALPINE_VERSION='3.21'
 DEBIAN_VERSION='trixie-slim'
 DEBIAN_CODENAME='trixie'
 

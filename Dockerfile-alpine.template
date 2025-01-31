@@ -4,11 +4,11 @@ LABEL maintainer="Marcin Haba <marcin.haba@bacula.pl>"
 
 ENV BACULARIS_VERSION=%%BACULARIS_VERSION%%
 ENV PACKAGE_NAME=%%PACKAGE_NAME%%
-ENV PHP_VERSION=82
+ENV PHP_VERSION=84
 ENV WEB_USER=nginx
 
 RUN if [ "${PACKAGE_NAME}" = 'standalone' ] || [ "${PACKAGE_NAME}" = 'api-dir' ]; then \
-		apk add postgresql16; \
+		apk add postgresql17; \
 		mkdir -m 0777 /run/postgresql; \
 		chown postgres:postgres /run/postgresql; \
 	fi && \
