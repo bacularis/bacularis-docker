@@ -80,8 +80,8 @@ def prepareProject() {
 		ln -sf \"vendor/${NAME}/${NAME}-common/Common\" \"${NAME}/protected/\"
 		ln -sf \"vendor/${NAME}/${NAME}-api/API\" \"${NAME}/protected/\"
 		ln -sf \"vendor/${NAME}/${NAME}-web/Web\" \"${NAME}/protected/\"
-		cp \"${NAME}/protected/vendor/bower-asset/fontawesome/css/all.min.css\" \"${NAME}/htdocs/themes/Baculum-v2/fonts/css/fontawesome-all.min.css\"
-		cp -r \"${NAME}/protected/vendor/bower-asset/fontawesome/webfonts/\"* \"${NAME}/htdocs/themes/Baculum-v2/fonts/webfonts/\"
+		cp \"${NAME}/protected/vendor/npm-asset/fortawesome--fontawesome-free/css/all.min.css\" \"${NAME}/htdocs/themes/Baculum-v2/fonts/css/fontawesome-all.min.css\"
+		cp -r \"${NAME}/protected/vendor/npm-asset/fortawesome--fontawesome-free/webfonts/\"* \"${NAME}/htdocs/themes/Baculum-v2/fonts/webfonts/\"
 	"""
 }
 
