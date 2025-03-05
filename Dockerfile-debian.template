@@ -12,11 +12,12 @@ RUN apt update && \
 	if [ "${PACKAGE_NAME}" = 'standalone' ] || [ "${PACKAGE_NAME}" = 'api-dir' ]; then \
 		apt -y install postgresql; \
 		/etc/init.d/postgresql start; \
-		sed -i 's!peer$!trust!g' /etc/postgresql/16/main/pg_hba.conf; \
+		sed -i 's!peer$!trust!g' /etc/postgresql/17/main/pg_hba.conf; \
 		mkdir /etc/dbconfig-common; \
 		echo "dbc_install=false\ndbc_dbtype=pgsql\ndbc_name=bacula\ndbc_address=localhost\ndbc_dbuser=bacula\ndbc_dbpassword=" > /etc/dbconfig-common/bacula-director-pgsql.conf; \
 		apt -y install dbconfig-no-thanks bacula-director bacula-director-pgsql bacula-console; \
 		sed -i 's!XXX_DBNAME_XXX!bacula!g; s!XXX_DBUSER_XXX!bacula!g; s!XXX_DBPASSWORD_XXX!bacula!g; /DirAddress = 127.0.0.1/d' /etc/bacula/bacula-dir.conf; \
+		sed -i 's/\$\$/\\$\\$/g' /usr/share/bacula-director/make_postgresql_tables; \
 	fi && \
 	if [ "${PACKAGE_NAME}" = 'standalone' ] || [ "${PACKAGE_NAME}" = 'api-sd' ]; then \
 		apt -y install bacula-sd; \
