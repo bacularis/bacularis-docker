@@ -27,6 +27,7 @@ RUN if [ "${PACKAGE_NAME}" = 'standalone' ] || [ "${PACKAGE_NAME}" = 'api-dir' ]
 	sed -i "/listen = / s!127.0.0.1:9000!/var/run/php-fpm.sock!; /user = / s!nobody!${WEB_USER}!; /group = / s!nobody!${WEB_USER}!; s!;listen.group!listen.group!" /etc/php${PHP_VERSION}/php-fpm.d/www.conf && \
 	if [ "${PACKAGE_NAME}" = 'standalone' ] || [ "${PACKAGE_NAME}" = 'api-dir' ]; then \
 		# Fix job to backup catalog database
+		sed -i 's!/usr/libexec/postgresql[[:digit:]]\{1,\}!/usr/libexec/postgresql!' /etc/bacula/scripts/make_catalog_backup /etc/bacula/scripts/make_catalog_backup.pl; \
 		sed -i 's!make_catalog_backup MyCatalog!make_catalog_backup bacula!' /etc/bacula/bacula-dir.conf; \
 	fi
 
