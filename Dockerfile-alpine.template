@@ -13,7 +13,7 @@ RUN if [ "${PACKAGE_NAME}" = 'standalone' ] || [ "${PACKAGE_NAME}" = 'api-dir' ]
 		chown postgres:postgres /run/postgresql; \
 	fi && \
 	if [ "${PACKAGE_NAME}" = 'standalone' ] || [ "${PACKAGE_NAME}" = 'web' ]; then \
-		apk add expect openssh-client gnupg; \
+		apk add expect openssh-client gnupg openssl; \
 	fi && \
 	mkdir -m 0770 /run/bacula && \
 	apk add nginx && \
