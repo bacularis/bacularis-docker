@@ -82,6 +82,7 @@ def prepareProject() {
 		ln -sf \"vendor/${NAME}/${NAME}-web/Web\" \"${NAME}/protected/\"
 		cp \"${NAME}/protected/vendor/npm-asset/fortawesome--fontawesome-free/css/all.min.css\" \"${NAME}/htdocs/themes/Baculum-v2/fonts/css/fontawesome-all.min.css\"
 		cp -r \"${NAME}/protected/vendor/npm-asset/fortawesome--fontawesome-free/webfonts/\"* \"${NAME}/htdocs/themes/Baculum-v2/fonts/webfonts/\"
+		cp -r \"${NAME}/protected/vendor/npm-asset/fontsource--inter/files/\"* \"${NAME}/htdocs/themes/Baculum-v2/fonts/webfonts/\"
 	"""
 }
 
